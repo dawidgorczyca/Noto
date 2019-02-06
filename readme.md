@@ -1,17 +1,30 @@
-# Tsukue
-[![Travis CI](https://img.shields.io/travis/dawidgorczyca/Tsukue/master.svg?label=Travis%20CI&style=flat-square)](https://travis-ci.org/dawidgorczyca/Tsukue)
-[![Dependencies Status](https://img.shields.io/david/dawidgorczyca/Tsukue.svg?style=flat-square)](https://david-dm.org/dawidgorczyca/Tsukue)
-[![DevDependencies Status](https://img.shields.io/david/dev/dawidgorczyca/Tsukue.svg?style=flat-square)](https://david-dm.org/dawidgorczyca/Tsukue?type=dev)
-[![Issues Status](https://img.shields.io/github/issues/dawidgorczyca/Tsukue.svg?style=flat-square)](https://github.com/dawidgorczyca/Tsukue/issues)
+# Noto
+[![Travis CI](https://img.shields.io/travis/dawidgorczyca/Noto/master.svg?label=Travis%20CI&style=flat-square)](https://travis-ci.org/dawidgorczyca/Noto)
+[![Dependencies Status](https://img.shields.io/david/dawidgorczyca/Noto.svg?style=flat-square)](https://david-dm.org/dawidgorczyca/Noto)
+[![DevDependencies Status](https://img.shields.io/david/dev/dawidgorczyca/Noto.svg?style=flat-square)](https://david-dm.org/dawidgorczyca/Noto?type=dev)
+[![Issues Status](https://img.shields.io/github/issues/dawidgorczyca/Noto.svg?style=flat-square)](https://github.com/dawidgorczyca/Noto/issues)
 
-Electron boilerplate build with React, TypeScript and Parcel. Contains all basic tooling needed for both commercial and hobbyist use. Based on [electron-react-parcel](https://github.com/shamofu/electron-react-parcel-boilerplate) by [Shamofu-shi](https://twitter.com/shamofu).
+Desktop notes application.
+* Using markdown live
+* Categorizing notes by labels
+* Grouping notess in notebooks
+* Generating PDF's from notebooks/notes
+* Editor plugins
+* Themes
+
+Later on, planning on adding:
+* Online syncing
+* Mobile version
+* Todo lists
+* Cooperation
+
+Built using [Tsukue](https://github.com/dawidgorczyca/Tsukue).
 
 ## Installation
-Clone it, fork it or download as ZIP, then `npm i` or `yarn install`. No initial configuration needed.
+Download the newest release, unzip and use it.
 
 ## Usage
-* `npm start` - Starts the application in development mode.
-* `npm build` Builds application for current OS.
-* Linter is automatically called on each commit
-* Tests are run automatically on each push
-* React devtools are included
+TBD
+
+## Development/Contribution
+TBD
