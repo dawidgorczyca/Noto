@@ -1,6 +1,8 @@
 const { format } = require('url')
+const { fork } = require('child_process')
+const path = require('path')
 
-const { BrowserWindow, app } = require('electron')
+const { BrowserWindow, app, ipcMain } = require('electron')
 const isDev = require('electron-is-dev')
 const { resolve } = require('app-root-path')
 
@@ -15,12 +17,23 @@ const installExtensions = async () => {
   ).catch(console.log)
 }
 
+const runBroker = (renderer) => {
+  const brokerSrc = path.join(__dirname, 'ipc.broker.js')
+  const broker = fork(brokerSrc)
+  broker.on('message', (msg) => {
+    renderer.webContents.send('ping', msg)
+  })
+}
+
 app.on('ready', async () => {
   const mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
     show: false
   })
+
+  runBroker(mainWindow)
+
   if (isDev) {
     await installExtensions()
   }
