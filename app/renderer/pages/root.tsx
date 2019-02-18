@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { Link } from 'react-router-dom'
+import uuid from 'uuid/v1'
 
 const {remote, ipcRenderer} = window.require('electron')
 
@@ -19,14 +20,34 @@ class Root extends React.Component {
   public connectWs() {
     ws = new WebSocket('ws://localhost:8643')
     ws.onopen = (event) => {
-      ws.send('dupa')
+      ws.send(JSON.stringify({
+        eventId: uuid(),
+        topic: 'disk.readDir',
+        client: {
+          id: uuid(),
+          name: 'mainFrontend'
+        }
+        payload: 'C:/Projects/noto'
+      }))
     }
     ws.onmessage = (event) => {
-      this.setState({status: event.data})
+      const parsedEvent = JSON.parse(event.data)
+      console.log(JSON.parse(event.data))
+      if (parsedEvent.topic !== 'events list') {
+        // this.setState({status: JSON.parse(event.data).payload})
+      }
     }
   }
   public sendMsg() {
-    ws.send(this.state.inputValue)
+    ws.send(JSON.stringify({
+        eventId: uuid(),
+        topic: 'Testing',
+        client: {
+          id: uuid(),
+          name: 'mainFrontend'
+        }
+        payload: this.state.inputValue
+      }))
   }
   public componentDidMount() {
     this.connectWs()
@@ -36,7 +57,7 @@ class Root extends React.Component {
       <div style={{ textAlign: 'center', marginTop: 100 }}>
         <h3><Link to='/start' id='start'>Start</Link></h3>
         <p>{this.state.status}</p>
-        <input type="text" value={this.state.inputValue} onChange={(event) => this.handleChange(event)}/>
+        <input type='text' value={this.state.inputValue} onChange={(event) => this.handleChange(event)}/>
         <button onClick={() => this.sendMsg()}>Send</button>
       </div>
     )

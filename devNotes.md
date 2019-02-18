@@ -7,15 +7,15 @@
   1. Event object:
   `{
     topic: sting,
+    client: {
+      name: string,
+      id: string
+    },
     payload: object/void,
   }`
-  2. Typical payload:
-  `{
-    client: string,
-    data: object
-  }`
-  3. TOPIC = COMMUNICATION CHANNEL NAME
-  4. Channels and contracts - code by hand
+  2. TOPIC = COMMUNICATION CHANNEL NAME
+  3. Client - client identification
+  3. Channels and contracts - code by hand
 4. Prepare wireframes
 5. Prepare visual design
 ## DONE:

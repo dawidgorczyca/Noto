@@ -71,10 +71,16 @@ app.on('ready', async () => {
 
 app.on('window-all-closed', () => {
   events.kill('SIGINT')
-  app.quit
+  app.quit()
   log.handleMsg({
     level: 'info',
     message: 'App closed'
   })
+  process.exit()
+})
+
+process.on( 'SIGTERM', () => {
+  events.kill('SIGINT')
+  app.quit()
   process.exit()
 })
