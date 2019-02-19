@@ -32,9 +32,8 @@ class Root extends React.Component {
     }
     ws.onmessage = (event) => {
       const parsedEvent = JSON.parse(event.data)
-      console.log(JSON.parse(event.data))
       if (parsedEvent.topic !== 'events list') {
-        // this.setState({status: JSON.parse(event.data).payload})
+        this.setState({status: JSON.parse(event.data).payload})
       }
     }
   }

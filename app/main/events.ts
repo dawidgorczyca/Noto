@@ -7,12 +7,6 @@ interface InterfaceWebsocketServerConfig {
   [propName: string]: any
 }
 
-// TODO:
-// Adding avaliable processes to the class
-// Emitting list of avaliable processes to all clients
-// Requesting a method from avaliable process
-// Sending response data to the client
-
 interface InterfaceMessage {
   eventId: string,
   topic: string,
