@@ -1,6 +1,9 @@
 const { format } = require('url')
+const { fork } = require('child_process')
+const path = require('path')
 
-const { BrowserWindow, app } = require('electron')
+const logger = require('./logger')
+const { BrowserWindow, app, ipcMain } = require('electron')
 const isDev = require('electron-is-dev')
 const { resolve } = require('app-root-path')
 
@@ -12,7 +15,28 @@ const installExtensions = async () => {
   return Promise.all(
     extensions.map((name) => installer.default(installer[name], forceDownload))
   // tslint:disable-next-line:no-console
-  ).catch(console.log)
+  ).catch((error) => log.handleMsg({
+    level: 'error',
+    message: `Extenstions error - ${error}`
+  }))
+}
+
+let events = null
+const log = logger.loggerInstance
+log.init()
+
+const eventsInit = (renderer) => {
+  const eventsSrc = path.join(__dirname, '../events', 'events.js')
+  events = fork(eventsSrc)
+
+  log.handleMsg({
+    level: 'info',
+    message: 'Events Central initialized'
+  })
+
+  events.on('message', (msg) => {
+    log.handleMsg(msg)
+  })
 }
 
 app.on('ready', async () => {
@@ -21,6 +45,8 @@ app.on('ready', async () => {
     height: 600,
     show: false
   })
+  eventsInit(mainWindow)
+
   if (isDev) {
     await installExtensions()
   }
@@ -43,4 +69,15 @@ app.on('ready', async () => {
   mainWindow.loadURL(url)
 })
 
-app.on('window-all-closed', app.quit)
+const shutdownAll = () => {
+  events.kill('SIGINT')
+  app.quit()
+  log.handleMsg({
+    level: 'info',
+    message: 'App closed'
+  })
+  process.exit()
+}
+
+app.on('window-all-closed', () => shutdownAll())
+process.on( 'SIGTERM', () => shutdownAll())
