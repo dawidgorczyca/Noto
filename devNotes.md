@@ -6,16 +6,17 @@
 3. Process Communication Layer (PCL) definitions:
   1. Event object:
   `{
-    topic: sting,
+    eventId: string,
+    topic: string,
     client: {
       name: string,
       id: string
     },
     payload: object/void,
   }`
-  2. TOPIC = COMMUNICATION CHANNEL NAME
+  2. TOPIC = COMMUNICATION CHANNEL NAME/[SERVICE].[SERVICE_NAME].[SERVICE_METHOD]
   3. Client - client identification
-  3. Channels and contracts - code by hand
+4. Frontend communication
 4. Prepare wireframes
 5. Prepare visual design
 ## DONE:
