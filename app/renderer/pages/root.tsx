@@ -22,7 +22,7 @@ class Root extends React.Component {
     ws.onopen = (event) => {
       ws.send(JSON.stringify({
         eventId: uuid(),
-        topic: 'disk.readDir',
+        topic: 'service.disk.readDir',
         client: {
           id: uuid(),
           name: 'mainFrontend'

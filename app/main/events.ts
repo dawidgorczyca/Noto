@@ -49,16 +49,8 @@ class Events {
       })
     }
   }
-  private prepareServicesList(): void {
-    const servicesEventsList = {}
-    const names = Object.keys(this.services)
-    names.forEach((name, index) => {
-      const service = this.services[name]
-      if (service.type === serviceTypes.library) {
-        servicesEventsList[name] = Object.keys(this.services[name].target)
-      }
-    })
-    this.eventsList = servicesEventsList
+  public shutdown(): void {
+    this.server.close()
   }
   private async initWsServer(): void {
     const portValidation: boolean = await this.checkPort(this.config.port)
@@ -72,6 +64,17 @@ class Events {
       })
     }
   }
+  private prepareServicesList(): void {
+    const servicesEventsList = {}
+    const names = Object.keys(this.services)
+    names.forEach((name, index) => {
+      const service = this.services[name]
+      if (service.type === serviceTypes.library) {
+        servicesEventsList[name] = Object.keys(this.services[name].target)
+      }
+    })
+    this.eventsList = servicesEventsList
+  }
   private handleClient(): void {
     this.server.on('connection', (connection: any) => {
       connection.send(JSON.stringify({
@@ -80,6 +83,16 @@ class Events {
       }))
       connection.on('message', (message) => this.handleMessage(message, connection))
     })
+  }
+  private async handleService(topic: string, payload: any) {
+    const topicQuery = topic.split('.')
+    const action = topicQuery[0]
+    const service = this.services[topicQuery[1]]
+    let output
+    if (action === 'service') {
+      output = await service.target[topicQuery[2]](payload)
+    }
+    return output
   }
   private validateMessage(message: InterfaceMessage) {
     let output = true
@@ -92,15 +105,6 @@ class Events {
     }
     if (!client || !client.id || !client.name) {
       output = false
-    }
-    return output
-  }
-  private async handleService(topic: string, payload: any) {
-    const topicQuery = topic.split('.')
-    const service = this.services[topicQuery[0]]
-    let output
-    if (service) {
-      output = await service.target[topicQuery[1]](payload)
     }
     return output
   }
@@ -162,3 +166,4 @@ const eventBridge = new Events({
 })
 
 eventBridge.init()
+process.on( 'SIGTERM', () => eventBridge.shutdown())

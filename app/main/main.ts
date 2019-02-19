@@ -69,7 +69,7 @@ app.on('ready', async () => {
   mainWindow.loadURL(url)
 })
 
-app.on('window-all-closed', () => {
+const shutdownAll = () => {
   events.kill('SIGINT')
   app.quit()
   log.handleMsg({
@@ -77,10 +77,7 @@ app.on('window-all-closed', () => {
     message: 'App closed'
   })
   process.exit()
-})
+}
 
-process.on( 'SIGTERM', () => {
-  events.kill('SIGINT')
-  app.quit()
-  process.exit()
-})
+app.on('window-all-closed', () => shutdownAll())
+process.on( 'SIGTERM', () => shutdownAll())
