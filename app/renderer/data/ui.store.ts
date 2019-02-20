@@ -21,10 +21,14 @@ class UiStore {
       payload: dirPath,
       response: true
     })
-    reaction(() => EventsStore.responses[eventId].status, (change) => {
+    reaction(
+      () => EventsStore.responses[eventId].status,
+      (change, reaction) => {
       if (change === true) {
         const responseObj = Object.assign({}, EventsStore.responses[eventId].payload)
+        delete EventsStore.responses[eventId]
         this.dir = JSON.stringify(responseObj)
+        reaction.dispose()
       }
     })
   }
