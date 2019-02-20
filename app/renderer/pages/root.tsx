@@ -37,27 +37,47 @@ class Root extends React.Component {
       }
     }
   }
-  public sendMsg() {
-    ws.send(JSON.stringify({
-        eventId: uuid(),
-        topic: 'Testing',
-        client: {
-          id: uuid(),
-          name: 'mainFrontend'
-        }
-        payload: this.state.inputValue
-      }))
+  public sendMsg(msg: any) {
+    ws.send(JSON.stringify(msg))
   }
   public componentDidMount() {
     this.connectWs()
   }
   public render() {
+    const msgOne = {
+      eventId: uuid(),
+      topic: 'service.disk.readDir',
+      client: {
+        id: uuid(),
+        name: 'mainFrontend'
+      },
+      payload: this.state.inputValue
+    }
+    const msgTwo = {
+      eventId: uuid(),
+      topic: 'control.window.maximize',
+      client: {
+        id: uuid(),
+        name: 'mainFrontend'
+      }
+    }
+    const msgThree = {
+      eventId: uuid(),
+      topic: 'control.window.unmaximize',
+      client: {
+        id: uuid(),
+        name: 'mainFrontend'
+      }
+    }
     return(
       <div style={{ textAlign: 'center', marginTop: 100 }}>
         <h3><Link to='/start' id='start'>Start</Link></h3>
         <p>{this.state.status}</p>
         <input type='text' value={this.state.inputValue} onChange={(event) => this.handleChange(event)}/>
-        <button onClick={() => this.sendMsg()}>Send</button>
+        <button onClick={() => this.sendMsg(msgOne)}>Send</button>
+        <br/><br/>
+        <button onClick={() => this.sendMsg(msgTwo)}>Maximize</button>
+        <button onClick={() => this.sendMsg(msgThree)}>Minimze</button>
       </div>
     )
   }

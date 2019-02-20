@@ -38,6 +38,7 @@ class Events {
       this.prepareServicesList()
     } catch (error) {
       process.send({
+        topic: 'control.log'
         level: 'error',
         message: error
       })
@@ -53,6 +54,7 @@ class Events {
       this.handleClient()
     } else {
       process.send({
+        topic: 'control.log',
         level: 'error',
         message: 'Websocket Server Error - Defined Port is in use'
       })
@@ -102,6 +104,9 @@ class Events {
     }
     return output
   }
+  private getEventActionGroup(topic: string) {
+    return topic.split('.')[0]
+  }
   private async handleMessage(message: InterfaceMessage, connection: any): void {
     const parsedMessage = JSON.parse(message)
     const {
@@ -113,16 +118,29 @@ class Events {
     const validation = this.validateMessage(parsedMessage)
     if (validation) {
       process.send({
+        topic: 'control.log',
         level: 'info',
         message: `Event - (${client.id})${client.name} - ${topic} - ${payload}`,
       })
-      const output = await this.handleService(topic, payload)
-      connection.send(JSON.stringify({
-        ...parsedMessage,
-        topic: `RESPONSE - ${topic}`,
-        payload: output
-      }))
-    }
+
+      const actionGroup = this.getEventActionGroup(parsedMessage.topic)
+
+      switch (actionGroup) {
+        case 'service':
+          const output = await this.handleService(topic, payload)
+          connection.send(JSON.stringify({
+            ...parsedMessage,
+            topic: `RESPONSE - ${topic}`,
+            payload: output
+          }))
+          break
+        case 'control':
+          process.send(parsedMessage)
+          break
+        default:
+          break
+      }
+   }
   }
   private async checkPort(portNumber: number): boolean {
     const check = await portCheck(portNumber)

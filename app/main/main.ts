@@ -3,6 +3,7 @@ const { fork } = require('child_process')
 const path = require('path')
 
 const logger = require('./logger')
+const RendererHandler = require('./rendererHandler')
 const { BrowserWindow, app, ipcMain } = require('electron')
 const isDev = require('electron-is-dev')
 const { resolve } = require('app-root-path')
@@ -25,7 +26,19 @@ let events = null
 const log = logger.loggerInstance
 log.init()
 
-const eventsInit = (renderer) => {
+const handleEventsMsg = (renderer, msg: any) => {
+  const actionType = msg.topic.split('.')[1]
+  switch (actionType) {
+    case 'log':
+      log.handleMsg(msg)
+      break
+    case 'window':
+      const rendererHandler = new RendererHandler(renderer, msg)
+      rendererHandler.call()
+  }
+}
+
+const eventsInit = (renderer: any) => {
   const eventsSrc = path.join(__dirname, '../events', 'events.js')
   events = fork(eventsSrc)
 
@@ -34,9 +47,7 @@ const eventsInit = (renderer) => {
     message: 'Events Central initialized'
   })
 
-  events.on('message', (msg) => {
-    log.handleMsg(msg)
-  })
+  events.on('message', (msg) => handleEventsMsg(renderer, msg)
 }
 
 app.on('ready', async () => {
