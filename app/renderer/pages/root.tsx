@@ -1,11 +1,9 @@
 import * as React from 'react'
 import { Link } from 'react-router-dom'
 import uuid from 'uuid/v1'
+import { observer, inject } from 'mobx-react'
 
-const {remote, ipcRenderer} = window.require('electron')
-
-let ws = null
-
+@inject('UiStore') @observer
 class Root extends React.Component {
   constructor(props) {
     super(props)
@@ -17,67 +15,21 @@ class Root extends React.Component {
   public handleChange(event) {
     this.setState({inputValue: event.target.value})
   }
-  public connectWs() {
-    ws = new WebSocket('ws://localhost:8643')
-    ws.onopen = (event) => {
-      ws.send(JSON.stringify({
-        eventId: uuid(),
-        topic: 'service.disk.readDir',
-        client: {
-          id: uuid(),
-          name: 'mainFrontend'
-        }
-        payload: 'C:/Projects/noto'
-      }))
-    }
-    ws.onmessage = (event) => {
-      const parsedEvent = JSON.parse(event.data)
-      if (parsedEvent.topic !== 'events list') {
-        this.setState({status: JSON.parse(event.data).payload})
-      }
-    }
-  }
-  public sendMsg(msg: any) {
-    ws.send(JSON.stringify(msg))
-  }
-  public componentDidMount() {
-    this.connectWs()
+  public getDir() {
+    this.props.UiStore.getDir(this.state.inputValue)
   }
   public render() {
-    const msgOne = {
-      eventId: uuid(),
-      topic: 'service.disk.readDir',
-      client: {
-        id: uuid(),
-        name: 'mainFrontend'
-      },
-      payload: this.state.inputValue
-    }
-    const msgTwo = {
-      eventId: uuid(),
-      topic: 'control.window.maximize',
-      client: {
-        id: uuid(),
-        name: 'mainFrontend'
-      }
-    }
-    const msgThree = {
-      eventId: uuid(),
-      topic: 'control.window.unmaximize',
-      client: {
-        id: uuid(),
-        name: 'mainFrontend'
-      }
-    }
+    const { UiStore } = this.props
+    const { maximize, unmaximize } = UiStore
     return(
       <div style={{ textAlign: 'center', marginTop: 100 }}>
         <h3><Link to='/start' id='start'>Start</Link></h3>
-        <p>{this.state.status}</p>
+        <p>{UiStore.dir}</p>
         <input type='text' value={this.state.inputValue} onChange={(event) => this.handleChange(event)}/>
-        <button onClick={() => this.sendMsg(msgOne)}>Send</button>
+        <button onClick={() => this.getDir()}>Send</button>
         <br/><br/>
-        <button onClick={() => this.sendMsg(msgTwo)}>Maximize</button>
-        <button onClick={() => this.sendMsg(msgThree)}>Minimze</button>
+        <button onClick={() => maximize()}>Maximize</button>
+        <button onClick={() => unmaximize()}>Minimze</button>
       </div>
     )
   }

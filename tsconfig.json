@@ -4,6 +4,7 @@
     "jsx": "preserve",
     "sourceMap": true,
     "moduleResolution": "node",
-    "removeComments": false
+    "removeComments": false,
+    "experimentalDecorators": true
   }
 }

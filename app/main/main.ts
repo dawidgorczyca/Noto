@@ -3,7 +3,7 @@ const { fork } = require('child_process')
 const path = require('path')
 
 const logger = require('./logger')
-const RendererHandler = require('./rendererHandler')
+const RendererHandler = require('./renderer.handler')
 const { BrowserWindow, app, ipcMain } = require('electron')
 const isDev = require('electron-is-dev')
 const { resolve } = require('app-root-path')
