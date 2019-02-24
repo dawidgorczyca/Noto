@@ -1,7 +1,8 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
+import Splash from './pages/splash'
 
-import Router from './router'
+import './styles/main.scss'
 
 const render = (Component) => {
   ReactDOM.render(
@@ -10,4 +11,4 @@ const render = (Component) => {
   )
 }
 
-render(Router)
+render(Splash)
