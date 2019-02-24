@@ -1,6 +1,9 @@
 import * as React from 'react'
 import { observer, inject } from 'mobx-react'
 import TopLogo from '../media/top_logo.svg'
+import IconClose from '../media/window_close.svg'
+import IconMax from '../media/window_maximize.svg'
+import IconMin from '../media/window_minimize.svg'
 
 const Interface = inject('UiStore')(observer(({UiStore, children}) => {
   const { maximize, unmaximize, close } = UiStore
@@ -10,12 +13,28 @@ const Interface = inject('UiStore')(observer(({UiStore, children}) => {
   return (
     <div className='interface'>
       <div className='topbar'>
-        <TopLogo />
-        <button onClick={() => maximize()}>Maximize</button>
-        <button onClick={() => unmaximize()}>Minimze</button>
-        <button onClick={() => close()}>close</button>
+        <div className='topbar-brand shadow'>
+          <TopLogo />
+        </div>
+
+        <div className='window-control'>
+          <button
+            className='window-btn window-minimize'
+            onClick={() => unmaximize()}
+          ><IconMin/></button>
+          <button
+            className='window-btn window-maximize'
+            onClick={() => maximize()}
+          ><IconMax/></button>
+          <button
+            className='window-btn window-close'
+            onClick={() => close()}
+          ><IconClose/></button>
+        </div>
       </div>
-      {children}
+      <div className='interface-content shadow'>
+        {children}
+      </div>
     </div>
   )
 }))

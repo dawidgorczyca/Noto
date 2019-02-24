@@ -1,0 +1,50 @@
+$interfaceBorder: 2px;
+
+.interface-content {
+  @include centered;
+  width: $mainWidth;
+  height: $mainHeight;
+  border: $interfaceBorder solid $primary;
+  animation-duration: 0.5s;
+  animation-name: interfaceborder;
+}
+
+@keyframes interfaceborder {
+  0% {
+    border-width: 10px;
+  }
+  100% {
+    border-width: $interfaceBorder;
+  }
+}
+
+.topbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.topbar-brand {
+  float: left;
+  padding: 7px 15px;
+  margin-left: $unit / 2 - $interfaceBorder;
+  background-color: $primary;
+  -webkit-app-region: drag;
+}
+
+.window-control {
+  float: right;
+  margin-right: $unit / 2 - 8px;
+  margin-top: 4px;
+}
+
+.window-btn {
+  background-color: transparent;
+  border: none;
+  outline: none;
+
+  &:hover {
+    cursor: pointer;
+    filter: drop-shadow( 0px 0px 4px $light);
+  }
+}
