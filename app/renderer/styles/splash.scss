@@ -1,0 +1,111 @@
+$splashBorder: 10px;
+
+.splash-border {
+  @include centered;
+  width: $mainWidth;
+  height: $mainHeight;
+  border: $splashBorder solid $primary;
+  animation-duration: 1.3s;
+  animation-name: splashborder;
+  animation-timing-function: ease-out;
+}
+
+.splash-logo {
+  @include centered;
+}
+
+.splash-logo-letter {
+  animation-duration: 1.8s;
+  animation-name: splashlogo;
+  animation-timing-function: ease-out;
+}
+
+.shadow {
+  filter: drop-shadow( 0px 0px 4px $shadow);
+}
+
+@keyframes splashlogo {
+  0% {
+    transform: scaleY(0.0);
+    filter: drop-shadow( 0px 0px 4px $shadow);
+  }
+
+  80% {
+    transform: scaleY(0.0);
+    filter: drop-shadow( 0px 0px 4px $shadow);
+  }
+
+  85% {
+    filter: drop-shadow( 0px 0px 20px $shadow);
+  }
+
+  90% {
+    transform: scaleY(0.8);
+    filter: drop-shadow( 0px 0px 4px $shadow);
+  }
+
+  100% {
+    transform: scaleY(1.0);
+    filter: drop-shadow( 0px 0px 4px $shadow);
+  }
+}
+
+@keyframes splashborder {
+  0% {
+    border-width: 0px;
+    border-radius: 40px;
+    width: 0%;
+    height: 0%;
+    filter: drop-shadow( 0px 0px 4px $shadow);
+  }
+
+  40% {
+    border-width: 0px;
+    border-radius: 40px;
+    width: 0%;
+    height: 0%;
+    filter: drop-shadow( 0px 0px 4px $shadow);
+  }
+
+  50% {
+    border-width: 5px;
+    border-radius: 40px;
+    width: 90%;
+    height: 0%;
+    filter: drop-shadow( 0px 0px 4px $shadow);
+  }
+
+  55% {
+    border-width: 5px;
+    border-radius: 40px;
+    width: $mainWidth;
+    height: 0%;
+    filter: drop-shadow( 0px 0px 4px $shadow);
+  }
+
+  75% {
+    border-width: 5px;
+    border-radius: 0px;
+    width: $mainWidth;
+    height: 0%;
+    filter: drop-shadow( 0px 0px 20px $shadow);
+  }
+
+  85% {
+    border-width: 10px;
+    height: 82%;
+    filter: drop-shadow( 0px 0px 4px $shadow);
+  }
+
+  90% {
+    border-width: 10px;
+    height: $mainHeight;
+    filter: drop-shadow( 0px 0px 4px $shadow);
+  }
+
+  100% {
+    border-width: 10px;
+    height: $mainHeight;
+    filter: drop-shadow( 0px 0px 4px $shadow);
+  }
+}

@@ -1,3 +1,12 @@
+$unit: 60px;
+$mainWidth: calc(100vw - 60px);
+$mainHeight: calc(100vh - 60px);
+
+@import './colors';
+@import './mixins';
+@import './splash.scss';
+@import './interface.scss';
+
 body {
   background-color: #341D1B;
   margin: 0px;
@@ -8,119 +17,4 @@ body {
   position: fixed;
   top: 10px;
   right: 10px;
-}
-.splash-border {
-  position: fixed;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: 95%;
-  height: 88%;
-  border: 10px solid #C86202;
-  animation-duration: 1.3s;
-  animation-name: splashborder;
-  animation-timing-function: ease-out;
-}
-
-.splash-logo {
-  position: fixed;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.splash-logo-letter {
-  animation-duration: 1.8s;
-  animation-name: splashlogo;
-  animation-timing-function: ease-out;
-}
-
-.shadow {
-  filter: drop-shadow( 0px 0px 4px rgba(255, 79, 0, 0.5));
-}
-
-@keyframes splashlogo {
-  0% {
-    transform: scaleY(0.0);
-    filter: drop-shadow( 0px 0px 4px rgba(255, 79, 0, 0.0));
-  }
-
-  80% {
-    transform: scaleY(0.0);
-    filter: drop-shadow( 0px 0px 4px rgba(255, 79, 0, 0.0));
-  }
-
-  85% {
-    filter: drop-shadow( 0px 0px 20px rgba(255, 79, 0, 0.9));
-  }
-
-  90% {
-    transform: scaleY(0.8);
-    filter: drop-shadow( 0px 0px 4px rgba(255, 79, 0, 0.5));
-  }
-
-  100% {
-    transform: scaleY(1.0);
-    filter: drop-shadow( 0px 0px 4px rgba(255, 79, 0, 0.5));
-  }
-}
-
-@keyframes splashborder {
-  0% {
-    border-width: 0px;
-    border-radius: 40px;
-    width: 0%;
-    height: 0%;
-    filter: drop-shadow( 0px 0px 4px rgba(255, 79, 0, 0.0));
-  }
-
-  40% {
-    border-width: 0px;
-    border-radius: 40px;
-    width: 0%;
-    height: 0%;
-    filter: drop-shadow( 0px 0px 4px rgba(255, 79, 0, 0.0));
-  }
-
-  50% {
-    border-width: 5px;
-    border-radius: 40px;
-    width: 90%;
-    height: 0%;
-    filter: drop-shadow( 0px 0px 4px rgba(255, 79, 0, 0.0));
-  }
-
-  55% {
-    border-width: 5px;
-    border-radius: 40px;
-    width: 95%;
-    height: 0%;
-    filter: drop-shadow( 0px 0px 4px rgba(255, 79, 0, 0.0));
-  }
-
-  75% {
-    border-width: 5px;
-    border-radius: 0px;
-    width: 95%;
-    height: 0%;
-    filter: drop-shadow( 0px 0px 20px rgba(255, 79, 0, 0.9));
-  }
-
-  85% {
-    border-width: 10px;
-    height: 82%;
-    filter: drop-shadow( 0px 0px 4px rgba(255, 79, 0, 0.0));
-  }
-
-  90% {
-    border-width: 10px;
-    height: 88%;
-    filter: drop-shadow( 0px 0px 4px rgba(255, 79, 0, 0.0));
-  }
-
-  100% {
-    border-width: 10px;
-    height: 88%;
-    filter: drop-shadow( 0px 0px 4px rgba(255, 79, 0, 0.5));
-  }
 }
