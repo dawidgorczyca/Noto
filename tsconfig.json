@@ -1,10 +1,11 @@
 {
   "compilerOptions": {
     "target": "esnext",
-    "jsx": "preserve",
+    "jsx": "react",
     "sourceMap": true,
     "moduleResolution": "node",
     "removeComments": false,
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "esModuleInterop": true
   }
 }

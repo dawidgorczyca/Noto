@@ -54,7 +54,8 @@ app.on('ready', async () => {
   const mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
-    show: false
+    show: false,
+    frame: false
   })
   eventsInit(mainWindow)
 

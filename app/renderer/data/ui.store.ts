@@ -52,6 +52,16 @@ class UiStore {
       }
     })
   }
+  public close(): void {
+    EventsStore.call({
+      eventId: uuid(),
+      topic: 'control.window.close',
+      client: {
+        id: uuid(),
+        name: 'mainFrontend.UiStore'
+      }
+    })
+  }
 }
 
 const store = new UiStore()

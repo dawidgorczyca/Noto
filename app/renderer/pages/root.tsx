@@ -20,16 +20,12 @@ class Root extends React.Component {
   }
   public render() {
     const { UiStore } = this.props
-    const { maximize, unmaximize } = UiStore
     return(
       <div style={{ textAlign: 'center', marginTop: 100 }}>
         <h3><Link to='/start' id='start'>Start</Link></h3>
         <p>{UiStore.dir}</p>
         <input type='text' value={this.state.inputValue} onChange={(event) => this.handleChange(event)}/>
         <button onClick={() => this.getDir()}>Send</button>
-        <br/><br/>
-        <button onClick={() => maximize()}>Maximize</button>
-        <button onClick={() => unmaximize()}>Minimze</button>
       </div>
     )
   }

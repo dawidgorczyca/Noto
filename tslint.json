@@ -10,6 +10,8 @@
     "ordered-imports": false,
     "jsx-boolean-value": false,
     "jsx-no-lambda": false,
-    "no-unused-expression": false
+    "no-unused-expression": false,
+    "jsx-no-multiline-js": false,
+    "jsx-alignment": false
   }
 }
