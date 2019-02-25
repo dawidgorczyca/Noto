@@ -35,6 +35,8 @@ const handleEventsMsg = (renderer, msg: any) => {
     case 'window':
       const rendererHandler = new RendererHandler(renderer, msg)
       rendererHandler.call()
+    case 'dialog':
+      console.log(actionType)
   }
 }
 

@@ -6,9 +6,23 @@ import IconMax from '../media/window_maximize.svg'
 import IconMin from '../media/window_minimize.svg'
 
 const Interface = inject('UiStore')(observer(({UiStore, children}) => {
-  const { maximize, unmaximize, close } = UiStore
+  const {
+    maximize,
+    unmaximize,
+    close,
+    selectFile
+  } = UiStore
 
   maximize()
+
+  const selectFolder = () => {
+    const selectedDirectory = remote.dialog.showOpenDialog({
+      properties: ['openDirectory']
+    })
+    if (selectedDirectory && selectedDirectory[0]) {
+      console.log(selectedDirectory[0])
+    }
+  }
 
   return (
     <div className='interface'>
@@ -17,7 +31,13 @@ const Interface = inject('UiStore')(observer(({UiStore, children}) => {
           <TopLogo />
         </div>
 
-        <div className='window-control'>
+        <ul className='topbar-menu shadow'>
+          <li onClick={() => selectFile()}>Open</li>
+          <li>Save</li>
+          <li>Preview</li>
+        </ul>
+
+        <div className='window-control shadow'>
           <button
             className='window-btn window-minimize'
             onClick={() => unmaximize()}

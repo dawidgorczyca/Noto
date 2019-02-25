@@ -62,6 +62,28 @@ class UiStore {
       }
     })
   }
+  public selectFile(): void {
+    EventsStore.call({
+      eventId: uuid(),
+      topic: 'control.dialog.showOpenDialog',
+      client: {
+        id: uuid(),
+        name: 'mainFrontend.UiStore'
+      },
+      payload: ['openFile']
+    })
+  }
+  public selectDir(): void {
+    EventsStore.call({
+      eventId: uuid(),
+      topic: 'control.dialog.showOpenDialog',
+      client: {
+        id: uuid(),
+        name: 'mainFrontend.UiStore'
+      },
+      payload: ['openDirectory']
+    })
+  }
 }
 
 const store = new UiStore()

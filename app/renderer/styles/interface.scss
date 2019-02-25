@@ -48,3 +48,23 @@ $interfaceBorder: 2px;
     filter: drop-shadow( 0px 0px 4px $light);
   }
 }
+
+.topbar-menu {
+  float: left;
+  margin: 0px;
+  padding: 0px;
+  list-style: none;
+
+  li {
+    float: left;
+    padding: 4px 10px;
+    font-size: 17px;
+    color: $primary;
+    text-transform: uppercase;
+    cursor: pointer;
+
+    &:hover {
+      color: $selection;
+    }
+  }
+}

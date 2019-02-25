@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import uuid from 'uuid/v1'
 import { observer, inject } from 'mobx-react'
 
-@inject('UiStore') @observer
+@inject('UiStore', 'EditorStore') @observer
 class Root extends React.Component {
   constructor(props) {
     super(props)
