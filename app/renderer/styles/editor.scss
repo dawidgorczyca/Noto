@@ -1,0 +1,48 @@
+$editorHeight: calc(100vh - 60px);
+$editorInputHeight: calc(100vh - 60px - 32px);
+
+.editor {
+  width: 100%;
+  height: $editorHeight;
+  position: relative;
+}
+
+.editor-input {
+  font-family: 'fira_coderegular';
+  text-align: justify;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 5% 15%;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  height: $editorInputHeight;
+  color: $text;
+  font-size: 18px;
+  resize: none;
+
+  &::selection {
+    background: $selection;
+  }
+
+  &::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  &::-webkit-scrollbar-track {
+      background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+      background: $primary;
+  }
+}
+
+.editor-bar {
+  width: 100%;
+  background-color: $primary;
+  color: $background;
+  height: 32px;
+  position: absolute;
+  bottom: 0px;
+}

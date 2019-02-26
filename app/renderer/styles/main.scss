@@ -2,13 +2,16 @@ $unit: 60px;
 $mainWidth: calc(100vw - 60px);
 $mainHeight: calc(100vh - 60px);
 
+@import './fonts';
 @import './colors';
 @import './mixins';
 @import './splash.scss';
 @import './interface.scss';
+@import './editor.scss';
 
 body {
-  background-color: #341D1B;
+  font-family: 'dosisregular';
+  background-color: $background;
   margin: 0px;
   padding: 0px;
 }

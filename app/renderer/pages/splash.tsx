@@ -5,9 +5,10 @@ import { Provider, observer, inject } from 'mobx-react'
 import useInterval from '../hooks/useInterval.ts'
 import EventsStore from '../data/events.store.ts'
 import UiStore from '../data/ui.store.ts'
+import EditorStore from '../data/editor.store.ts'
 import Router from './../router'
 
-const stores = {EventsStore, UiStore}
+const stores = {EventsStore, UiStore, EditorStore}
 
 const Splash = () => {
   const [

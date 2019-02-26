@@ -1,12 +1,17 @@
+const path = require('path')
+const os = require('os')
+const storage = require('electron-json-storage')
 const { format } = require('url')
 const { fork } = require('child_process')
-const path = require('path')
+const { dialog } = require('electron')
 
 const logger = require('./logger')
 const RendererHandler = require('./renderer.handler')
 const { BrowserWindow, app, ipcMain } = require('electron')
 const isDev = require('electron-is-dev')
 const { resolve } = require('app-root-path')
+
+storage.setDataPath(os.tmpdir())
 
 const installExtensions = async () => {
   const installer = require('electron-devtools-installer')
@@ -26,7 +31,7 @@ let events = null
 const log = logger.loggerInstance
 log.init()
 
-const handleEventsMsg = (renderer, msg: any) => {
+const handleEventsMsg = async (renderer, msg: any) => {
   const actionType = msg.topic.split('.')[1]
   switch (actionType) {
     case 'log':
@@ -35,6 +40,18 @@ const handleEventsMsg = (renderer, msg: any) => {
     case 'window':
       const rendererHandler = new RendererHandler(renderer, msg)
       rendererHandler.call()
+    case 'dialog':
+      const dialogHandler = new RendererHandler(dialog, msg)
+      const results = await dialogHandler.get()
+      if(results && results.length) {
+        storage.set('noto_lastFile', { results }, function(error) {
+          if (error) throw error;
+        })
+        log.handleMsg({
+          level: 'info',
+          message: results
+        })
+      }
   }
 }
 

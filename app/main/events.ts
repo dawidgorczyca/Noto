@@ -1,5 +1,6 @@
 const ws = require('ws')
 const portCheck = require('detect-port')
+const os = require('os')
 const diskEvents = require('./disk.events')
 
 interface InterfaceWebsocketServerConfig {
@@ -27,10 +28,12 @@ class Events {
   private server: any,
   private services: any,
   private eventsList: any,
+  private dataPath: any
 
   constructor(config: InterfaceWebsocketServerConfig, services: any) {
     this.config = config
     this.services = services
+    this.dataPath = os.tmpdir()
   }
   public async init(): void {
     try {
@@ -76,6 +79,10 @@ class Events {
       connection.send(JSON.stringify({
         topic: 'events list',
         payload: this.eventsList
+      }))
+      connection.send(JSON.stringify({
+        topic: 'dataPath',
+        payload: this.dataPath
       }))
       connection.on('message', (message) => this.handleMessage(message, connection))
     })

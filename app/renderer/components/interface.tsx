@@ -5,8 +5,14 @@ import IconClose from '../media/window_close.svg'
 import IconMax from '../media/window_maximize.svg'
 import IconMin from '../media/window_minimize.svg'
 
-const Interface = inject('UiStore')(observer(({UiStore, children}) => {
-  const { maximize, unmaximize, close } = UiStore
+const Interface = inject('UiStore', 'EditorStore')(observer(({UiStore, EditorStore, children}) => {
+  const {
+    maximize,
+    unmaximize,
+    close,
+    selectFile
+  } = UiStore
+  const { getFilePath } = EditorStore
 
   maximize()
 
@@ -17,7 +23,16 @@ const Interface = inject('UiStore')(observer(({UiStore, children}) => {
           <TopLogo />
         </div>
 
-        <div className='window-control'>
+        <ul className='topbar-menu shadow'>
+          <li onClick={() => {
+            selectFile()
+            getFilePath()
+          }}>Open</li>
+          <li>Save</li>
+          <li>Preview</li>
+        </ul>
+
+        <div className='window-control shadow'>
           <button
             className='window-btn window-minimize'
             onClick={() => unmaximize()}
