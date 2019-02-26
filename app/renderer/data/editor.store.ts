@@ -41,15 +41,14 @@ class EditorStore {
         if (responseObj.data.length) {
           let bufferOriginal = Buffer.from(responseObj.data)
           store.filePath = JSON.parse(bufferOriginal.toString('utf8')).results[0]
-          console.log('store.filePath',store.filePath)
-          store.getFile()
+          store.getFile(store.filePath)
         }
         reaction.dispose()
       }
     })
   }
-  public getFile(): void {
-    console.log('getfile', store.filePath)
+  public getFile(filePath: string): void {
+    const path = filePath && filePath.length ? filePath : this.filePath
     const eventId = uuid()
     EventsStore.call({
       eventId,
@@ -58,7 +57,7 @@ class EditorStore {
         id: uuid(),
         name: 'mainFrontend.UiStore'
       },
-      payload: this.filePath,
+      payload: path,
       response: true
     })
     reaction(
@@ -71,7 +70,6 @@ class EditorStore {
         if (responseObj.data.length) {
           let bufferOriginal = Buffer.from(responseObj.data)
           store.rawData = bufferOriginal.toString('utf8')
-          console.log(store.rawData)
         }
         reaction.dispose()
       }

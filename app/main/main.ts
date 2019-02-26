@@ -44,6 +44,7 @@ const handleEventsMsg = async (renderer, msg: any) => {
       const dialogHandler = new RendererHandler(dialog, msg)
       const results = await dialogHandler.get()
       if(results && results.length) {
+        renderer.send('dialog', results)
         storage.set('noto_lastFile', { results }, function(error) {
           if (error) throw error;
         })

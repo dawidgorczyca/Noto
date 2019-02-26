@@ -22,7 +22,6 @@ class RendererHandler {
   public async get(): any {
     try {
       const results = await this.windowInstance[this.getMethod()](this.event.payload)
-      console.log('results',results)
       return results
     } catch(error) {
       return error
