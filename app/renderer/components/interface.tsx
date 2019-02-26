@@ -4,6 +4,8 @@ import TopLogo from '../media/top_logo.svg'
 import IconClose from '../media/window_close.svg'
 import IconMax from '../media/window_maximize.svg'
 import IconMin from '../media/window_minimize.svg'
+const electron = window.require('electron')
+
 
 const Interface = inject('UiStore', 'EditorStore')(observer(({UiStore, EditorStore, children}) => {
   const {
@@ -12,9 +14,13 @@ const Interface = inject('UiStore', 'EditorStore')(observer(({UiStore, EditorSto
     close,
     selectFile
   } = UiStore
-  const { getFilePath } = EditorStore
+  const { getFile } = EditorStore
 
   maximize()
+
+  electron.ipcRenderer.on('dialog', (event, message) => {
+    getFile(message)
+  })
 
   return (
     <div className='interface'>
@@ -26,7 +32,6 @@ const Interface = inject('UiStore', 'EditorStore')(observer(({UiStore, EditorSto
         <ul className='topbar-menu shadow'>
           <li onClick={() => {
             selectFile()
-            getFilePath()
           }}>Open</li>
           <li>Save</li>
           <li>Preview</li>
