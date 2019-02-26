@@ -19,6 +19,15 @@ class RendererHandler {
   public async call(): void {
     await this.windowInstance[this.getMethod()](this.event.payload)
   }
+  public async get(): any {
+    try {
+      const results = await this.windowInstance[this.getMethod()](this.event.payload)
+      console.log('results',results)
+      return results
+    } catch(error) {
+      return error
+    }
+  }
   private getMethod(): string {
     return this.event.topic.split('.')[2]
   }

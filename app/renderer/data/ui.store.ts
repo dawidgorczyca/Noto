@@ -1,4 +1,4 @@
-import { autorun, observable, reaction } from 'mobx'
+import { observable, reaction } from 'mobx'
 import uuid from 'uuid/v1'
 
 import EventsStore from './events.store'
@@ -27,7 +27,7 @@ class UiStore {
       if (change === true) {
         const responseObj = Object.assign({}, EventsStore.responses[eventId].payload)
         delete EventsStore.responses[eventId]
-        this.dir = JSON.stringify(responseObj)
+        store.dir = JSON.stringify(responseObj)
         reaction.dispose()
       }
     })
@@ -87,9 +87,5 @@ class UiStore {
 }
 
 const store = new UiStore()
-
-autorun(() => {
-  console.log(store)
-})
 
 export default store

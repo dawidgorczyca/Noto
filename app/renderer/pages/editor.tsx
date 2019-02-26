@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { observer, inject } from 'mobx-react'
 
 const Editor = inject('EditorStore')(observer(({EditorStore}) => {

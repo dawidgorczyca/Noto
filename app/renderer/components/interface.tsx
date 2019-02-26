@@ -5,24 +5,16 @@ import IconClose from '../media/window_close.svg'
 import IconMax from '../media/window_maximize.svg'
 import IconMin from '../media/window_minimize.svg'
 
-const Interface = inject('UiStore')(observer(({UiStore, children}) => {
+const Interface = inject('UiStore', 'EditorStore')(observer(({UiStore, EditorStore, children}) => {
   const {
     maximize,
     unmaximize,
     close,
     selectFile
   } = UiStore
+  const { getFilePath } = EditorStore
 
   maximize()
-
-  const selectFolder = () => {
-    const selectedDirectory = remote.dialog.showOpenDialog({
-      properties: ['openDirectory']
-    })
-    if (selectedDirectory && selectedDirectory[0]) {
-      console.log(selectedDirectory[0])
-    }
-  }
 
   return (
     <div className='interface'>
@@ -32,7 +24,10 @@ const Interface = inject('UiStore')(observer(({UiStore, children}) => {
         </div>
 
         <ul className='topbar-menu shadow'>
-          <li onClick={() => selectFile()}>Open</li>
+          <li onClick={() => {
+            selectFile()
+            getFilePath()
+          }}>Open</li>
           <li>Save</li>
           <li>Preview</li>
         </ul>
