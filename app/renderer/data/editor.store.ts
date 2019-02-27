@@ -6,18 +6,24 @@ import EventsStore from './events.store'
 class EditorStore {
   @observable public rawData: ''
   @observable public filePath: ''
+  @observable public fileName: ''
+  @observable public wordsCount: -1
+  @observable public charsCount: -1
+  @observable public preview: false
+  @observable public previewData: any
 
   constructor() {
     this.rawData = ''
     this.filePath = ''
+    this.fileName = ''
+    this.wordsCount = -1
+    this.charsCount = -1
     this.initStore()
+    this.preview = false
+    this.previewData = ''
   }
-
-  public initStore(): void {
-    this.getFilePath()
-  }
-  public setRawData(data): void {
-    this.rawData = data
+  public setFilePath(path): void {
+    store.filePath = path
   }
   public getFilePath(): void {
     const eventId = uuid()
@@ -30,21 +36,6 @@ class EditorStore {
       },
       payload: `${EventsStore.dataPath}\\noto_lastFile.json`,
       response: true
-    })
-    reaction(
-      () => EventsStore.responses[eventId].status,
-      (change, reaction) => {
-      if (change === true) {
-        const responseObj = Object.assign({}, EventsStore.responses[eventId].payload)
-        delete EventsStore.responses[eventId]
-        // Below should not stay on frontend side
-        if (responseObj.data.length) {
-          let bufferOriginal = Buffer.from(responseObj.data)
-          store.filePath = JSON.parse(bufferOriginal.toString('utf8')).results[0]
-          store.getFile(store.filePath)
-        }
-        reaction.dispose()
-      }
     })
   }
   public getFile(filePath: string): void {
@@ -69,11 +60,42 @@ class EditorStore {
         // Below should not stay on frontend side
         if (responseObj.data.length) {
           let bufferOriginal = Buffer.from(responseObj.data)
-          store.rawData = bufferOriginal.toString('utf8')
+          if (path.length) {
+            store.fileName = path.split('\\').reverse()[0]
+          }
+          const text = bufferOriginal.toString('utf8')
+          store.setRawData(text)
         }
         reaction.dispose()
       }
     })
+  }
+  public writeFile(): void {
+    const eventId = uuid()
+    EventsStore.call({
+      eventId,
+      topic: 'service.disk.writeFile',
+      client: {
+        id: uuid(),
+        name: 'mainFrontend.UiStore'
+      },
+      payload: {
+        path: store.filePath,
+        data: store.rawData
+      },
+      response: false
+    })
+  }
+  public setRawData(data): void {
+    this.rawData = data
+    this.charsCount = data.length
+    this.wordsCount = data.split(' ').length
+  }
+  public togglePreview(): void {
+    store.preview = !store.preview
+  }
+  private initStore(): void {
+    this.getFilePath()
   }
 }
 

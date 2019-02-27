@@ -133,6 +133,7 @@
     "detect-port": "^1.3.0",
     "electron-is-dev": "^1.0.1",
     "electron-json-storage": "^4.1.6",
+    "markdown-to-jsx": "^6.9.1",
     "mobx": "^5.9.0",
     "mobx-react": "^5.4.3",
     "react-use": "^5.5.0",
