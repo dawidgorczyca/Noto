@@ -4,6 +4,7 @@ import TopLogo from '../media/top_logo.svg'
 import IconClose from '../media/window_close.svg'
 import IconMax from '../media/window_maximize.svg'
 import IconMin from '../media/window_minimize.svg'
+import Editor from '../pages/editor';
 const electron = window.require('electron')
 
 
@@ -14,12 +15,21 @@ const Interface = inject('UiStore', 'EditorStore')(observer(({UiStore, EditorSto
     close,
     selectFile
   } = UiStore
-  const { getFile } = EditorStore
+  const {
+    getFile,
+    writeFile,
+    setFilePath,
+    togglePreview,
+    preview
+  } = EditorStore
 
   maximize()
 
   electron.ipcRenderer.on('dialog', (event, message) => {
-    getFile(message)
+    if (message.length) {
+      getFile(message[0])
+      setFilePath(message[0])
+    }
   })
 
   return (
@@ -33,8 +43,12 @@ const Interface = inject('UiStore', 'EditorStore')(observer(({UiStore, EditorSto
           <li onClick={() => {
             selectFile()
           }}>Open</li>
-          <li>Save</li>
-          <li>Preview</li>
+          <li onClick={() => {
+            writeFile()
+          }}>Save</li>
+          <li className={preview ? 'active' : ''} onClick={() => {
+            togglePreview()
+          }}>Preview</li>
         </ul>
 
         <div className='window-control shadow'>

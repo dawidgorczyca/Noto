@@ -45,7 +45,7 @@ class UiStore {
   public unmaximize(): void {
     EventsStore.call({
       eventId: uuid(),
-      topic: 'control.window.unmaximize',
+      topic: 'control.window.minimize',
       client: {
         id: uuid(),
         name: 'mainFrontend.UiStore'

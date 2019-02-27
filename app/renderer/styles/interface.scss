@@ -66,5 +66,10 @@ $interfaceBorder: 2px;
     &:hover {
       color: $selection;
     }
+
+    &.active {
+      color: $background;
+    background-color: $primary;
+    }
   }
 }

@@ -77,10 +77,6 @@ class Events {
   private handleClient(): void {
     this.server.on('connection', (connection: any) => {
       connection.send(JSON.stringify({
-        topic: 'events list',
-        payload: this.eventsList
-      }))
-      connection.send(JSON.stringify({
         topic: 'dataPath',
         payload: this.dataPath
       }))
@@ -114,7 +110,7 @@ class Events {
   private getEventActionGroup(topic: string) {
     return topic.split('.')[0]
   }
-  private async handleMessage(message: InterfaceMessage, connection: any): void {
+  private async handleMessage(message: string, connection: any): void {
     const parsedMessage = JSON.parse(message)
     const {
       eventId,

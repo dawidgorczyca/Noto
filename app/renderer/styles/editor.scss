@@ -5,6 +5,7 @@ $editorInputHeight: calc(100vh - 60px - 32px);
   width: 100%;
   height: $editorHeight;
   position: relative;
+  color: $primary;
 }
 
 .editor-input {
@@ -45,4 +46,31 @@ $editorInputHeight: calc(100vh - 60px - 32px);
   height: 32px;
   position: absolute;
   bottom: 0px;
+  font-family: 'dosisbold';
+}
+
+.editor-filename {
+  font-family: 'dosisbold';
+  float: left;
+  font-size: 12px;
+  background-color: $background;
+  color: $primary;
+  padding: 7px 10px 8px;
+  margin: 2px 5px 0 0;
+}
+
+.editor-count {
+  float: left;
+  padding: 5px;
+  margin: 5px;
+  font-size: 12px;
+}
+
+.editor-preview {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 5% 15%;
+  font-family: 'dosisregular';
+  color: $text;
+  font-size: 18px;
 }
