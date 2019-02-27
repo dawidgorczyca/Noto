@@ -73,7 +73,8 @@ app.on('ready', async () => {
     width: 800,
     height: 600,
     show: false,
-    frame: false
+    frame: false,
+    icon: path.join(__dirname, 'icon.png')
   })
   eventsInit(mainWindow)
 

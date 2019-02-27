@@ -7,9 +7,9 @@ class EditorStore {
   @observable public rawData: ''
   @observable public filePath: ''
   @observable public fileName: ''
-  @observable public wordsCount: -1
-  @observable public charsCount: -1
-  @observable public preview: false
+  @observable public wordsCount: number
+  @observable public charsCount: number
+  @observable public preview: boolean
   @observable public previewData: any
 
   constructor() {

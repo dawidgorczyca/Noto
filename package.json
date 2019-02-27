@@ -5,7 +5,7 @@
   "description": "Desktop notebook",
   "main": "app/main/.parcel/main/main.js",
   "scripts": {
-    "start": "run-s events:build main:build watch",
+    "start": "run-s icon:build events:build main:build watch",
     "dist": "run-s parcel:build \"electron:build {@}\" --",
     "watch": "run-p -r parcel:watch electron:start",
     "electron:start": "nodemon --watch app/main/.parcel/main --exec \"electron .\"",
@@ -14,7 +14,8 @@
     "main:watch": "parcel watch app/main/main.ts --out-dir app/main/.parcel/main --out-file main --target electron",
     "events:watch": "parcel watch app/main/events.ts --out-dir app/main/.parcel/events --out-file events.js --target electron",
     "renderer:watch": "parcel app/renderer/index.html --port 1124 --out-dir app/renderer/.parcel/development",
-    "parcel:build": "run-s events:build main:build renderer:build",
+    "parcel:build": "run-s icon:build events:build main:build renderer:build",
+    "icon:build": "parcel build app/main/icon.png --out-dir app/main/.parcel/main --out-file icon --target electron",
     "main:build": "parcel build app/main/main.ts --out-dir app/main/.parcel/main --out-file main --target electron",
     "events:build": "parcel build app/main/events.ts --out-dir app/main/.parcel/events --out-file events.js --target electron",
     "renderer:build": "parcel build app/renderer/index.html --public-url ./ --out-dir app/renderer/.parcel/production",
@@ -74,7 +75,8 @@
       "artifactName": "${productName}-linux.${ext}"
     },
     "directories": {
-      "output": "release"
+      "output": "release",
+      "buildResources": "./app/buildResources"
     }
   },
   "jest": {

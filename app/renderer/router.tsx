@@ -12,8 +12,6 @@ export default () => {
       <HashRouter hashType='noslash'>
         <Switch>
           <Route exact path='/' component={Editor} />
-          <Route exact path='/start' component={Start} />
-          <Route component={() => <h1>204 No Content</h1>} />
         </Switch>
       </HashRouter>
     </Interface>
